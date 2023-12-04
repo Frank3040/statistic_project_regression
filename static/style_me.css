@@ -1,0 +1,337 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+html{
+    scroll-behavior: smooth;
+
+}
+/*Fuente del cuerpo de la página */
+body{
+    font-family: 'Poppins', sans-serif;
+    padding-top: 80px;
+    margin: 0;
+    background-color: rgb(33, 34, 35)
+}
+
+.main{
+    margin-top: 30px; /* Add a top margin to avoid content overlay */
+}
+
+/* The navigation bar */
+/* Estilado para la barra de navegación */
+.container{
+    max-width: auto;
+    margin: 0 auto;
+}
+.menu{
+    /*position: absolute;*/
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Prueba de menu estatico*/
+#menu-container{
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    z-index: 999;
+    background-color: #151517;
+    padding: 5px 20px;
+}
+
+.logo{
+    font-size: 25px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+}
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #fff;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+}
+.menu .navbar ul li a:hover {
+    color: rgb(17, 161, 223); /*18x66a*/
+}
+
+#menu {
+    display: none;
+}
+.menu-icono{
+    width: 25px;
+}
+.menu label{
+    cursor: pointer;
+    display: none;
+}
+
+/*Configuración de la barra de navegación para teléfonos*/
+@media(max-width:991px) {
+    .content{
+        min-height: 70px;
+    }
+    .menu{
+        top: 0;
+        padding: 20px;
+    }
+    .menu label{
+        display: initial;
+    }
+    .menu .navbar{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #151517; /*151517*/
+        display: none;  
+    }
+    .menu .navbar ul li a:hover {
+        color: #ffffff; /*18x66a*/
+    }
+    .menu .navbar ul li a:active {
+        color: rgb(17, 161, 223); /*18x66a*/
+    }
+    .menu .navbar ul li{
+        width: 100%;
+    }
+    #menu:checked ~ .navbar{
+        display: initial;
+    }
+}
+/* Fin del estilado de la barra de navegación */
+
+/*Estilado del body*/
+/* Título de la página*/
+.principal-title{
+    color:#fff;
+    text-align: center;
+    padding: 20px;
+    padding-top: 100px;
+    margin: 15px;
+    font-size: 40px;
+}
+
+/*Estilos sección project-core*/
+#project-core{
+    /*Estilos de prueba*/
+    width: 100%;
+    float: left;
+    height: 100vh;
+    margin-bottom: 400px;
+    /*Fin estilos de prueba*/
+}
+
+/*Estilo de los botones*/
+.input-file{
+    width: 15em;
+    padding: 6px;
+    margin: 10px;
+    height: 5ex;
+    background-image: linear-gradient(135deg, rgb(145, 64, 243) 40%, #4d53fc);
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+/*comienzo fom estilado*/
+form{
+	width:450px;
+	border-radius:10px;
+	margin:auto;
+	background-image: linear-gradient(135deg, #37333b 40%, #6a6a6c);
+}
+#clean-form{
+    padding-bottom: 30px;
+    width: 200px;
+}
+
+form label{
+	font-weight:bold;
+    color: #fff;
+}
+input[type="number"]{
+	width:180px;
+	padding:3px 10px;
+	border:1px solid #f6f6f6;
+	border-radius:3px;
+	background-color:#f6f6f6;
+	margin:8px 0;
+	display:inline-block;
+}
+
+/*Fin forms estilado*/
+#get-file{
+    text-align: center;
+    border-radius: 20px;
+    padding: 20px;
+    border: none;
+}
+
+.button-core {
+    width: 10em;
+    margin: 10px;
+    height: 5ex;
+    background-image: linear-gradient(135deg, rgb(145, 64, 243) 40%, #4d53fc);
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+/*Estilaje para los botones de los pasos del modelo*/
+.model-steps{
+    padding-bottom: 70px;
+    /*background-color: #DFCD11;*/
+    text-align: center;
+}
+
+/*Estilo de la sección HOME*/
+
+#home{
+    /*Estilos de prueba*/
+    width: 100%;
+    float: left;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Para apilar los elementos en columna */
+    align-items: center; 
+    /*Fin estilos de prueba*/
+}
+
+.extra_info {
+    text-align: center;
+    border: 2px solid #3498db; /* Color del borde */
+    border-radius: 10px; /* Radio de los bordes para hacerlos redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin: 10px; /* Margen externo para separar los contenedores */
+    width: 45%; /* Ancho de cada contenedor, ajusta según tus necesidades */
+    background-color: #e3d3d3;
+}
+
+/*Fin estilado sección HOME*/
+
+#about{
+    /*Estilos de prueba*/
+    margin-top: 500px;
+    width: 100%;
+    float: left;
+    height: 100vh;
+    /*Fin estilos de prueba*/
+}
+
+/* Responsive para el contenido main*/
+@media(max-width:991px){
+    #get-file{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    #home{
+        width: auto;
+        float: none;
+        height: auto;
+    }
+    #about{
+        width: auto;
+        float: none;
+        height: auto;
+    }
+    #project-core{
+        width: auto;
+        float: none;
+        height: auto;
+    }
+}
+
+/* Parte de esilos del footer*/
+.containerr {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer {
+    background-color: #151517; /*24262b*/
+    padding: 40px 0;
+    /*Estilos de prueba*/
+    /*background-color: #00c3ff;*/
+    width: 100%;
+    float: left;
+    /*Fin estilos de prueba*/
+}
+
+.footer-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.footer-links {
+    width: 25%;
+    padding: 0 15px;
+}
+.footer-links h4 {
+    font-size: 20px;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 25px;
+    font-weight: 500;
+    border-bottom: 2px solid #00c3ff;
+    padding-bottom: 10px;
+    display: inline-block;
+
+}
+.footer-links ul li a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #bbbbbb;
+    display: block;
+    margin-bottom: 15px;
+    transition: all .3s ease;
+}
+.footer-links ul li a:hover{
+    color: #ffffff;
+    padding-left: 6px;
+}
+.social-link a {
+    display: inline-block;
+    min-height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffff;
+    transition: all .5s ease;
+}
+.social-link a:hover {
+    background-color: #00c3ff;
+
+}
+
+@media(max-width:991px) {
+    .footer-row {
+        text-align: center;
+    }
+
+    .footer-links {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+}

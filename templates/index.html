@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Machine Learning Project</title>
+        <!--<link rel="stylesheet" href="../static/style_me.css">-->
+        <!--<script src="../static/actions.js"></script>-->
+        <script src="{{ url_for('static', filename='actions.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style_me.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    </head>
+    <body>
+        <header>
+
+            <!-- Barra de navegación de la página -->
+
+            <div class="content">
+                <div class="menu container" id="menu-container">
+                    <a href="#" class="logo">LOGO</a>
+                    <input type="checkbox" id="menu">
+                    <label for="menu">
+                        <img src="../static/Images/menu.png" class="menu-icono">
+                    </label>
+                    <nav class="navbar">
+                        <ul>
+                            <li><a href="#home">HOME</a></li>
+                            <li><a href="#project-core">PROJECT</a></li>
+                            <li><a href="#about">HOW</a></li>
+                            <li><a href="#contact">CONTACT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+        </header>
+
+
+        <!--Sección principal donde está todo el contenido-->
+        <div class="main">
+
+            <section id="home">
+                <h1 class="principal-title">Statistical Modeling Project</h1>
+                <!-- Texto de más -->
+                <div class="extra_info">
+                    <h2 class="second-title">What is multiple linear regression?</h2>
+                    <p>Multiple linear regression is a statistical method used to analyze the relationship 
+                        between two or more independent variables (often denoted as X1, X2, X3, etc.) and a dependent variable (often denoted as Y).
+                        It extends the concept of simple linear regression, 
+                        where only one independent variable is used to predict the dependent variable.</p>
+                </div>
+
+                <div class="extra_info">
+                    <h2 class="second-title">About the Project</h2>
+                    <p>In this project, the core objective is to develop a custom multiple linear regression model using a specifically chosen dataset. 
+                        To accomplish this, we'll guide our dataset through three crucial stages: cleaning, training, and prediction. In the cleaning phase, 
+                        we'll address issues like missing data, duplicates, and outliers to ensure the dataset is in optimal condition for training.
+
+                        The subsequent step involves training the model using the prepared dataset. During training, 
+                        the model learns to establish the relationships between the independent variables and the dependent variable, 
+                        fine-tuning its coefficients for accurate predictions.
+                        
+                        Following the model training, our focus shifts to prediction, whick involves making predictions based on the trained model. 
+                        Then we will build a Flask API that will have the capability to submit a dataset for cleaning, initiate the training process, 
+                        and then utilize the trained model to make predictions.
+                        
+                        To enhance the accessibility and deployment of our application, 
+                        we'll incorporate Docker. Docker facilitates the encapsulation of our entire application, 
+                        including dependencies and environment settings, into a container. This containerization ensures consistency across different environments, 
+                        streamlining the deployment process.</p>
+                </div>
+            </section>
+
+            <section id="project-core">
+
+                <h1 class="principal-title">Multiple Linear Regression API</h1>
+
+                <!-- Boton para subir el archivo-->
+
+                <div id="get-file" class="model-steps">
+
+                    <!-- Formulario que permite subir un archivo -->
+
+                    <form action="/upload" method="post" enctype="multipart/form-data" id="form-upload" onsubmit="return realizarAccion()">
+                        <label for="file">Choose a CSV file:</label>
+                        <input type="file" name="file" accept=".csv" class="input-file" required>
+                        <br>
+                        <input type="submit" value="Guardar" class="button-core">
+                    </form>
+                    {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                    {% endif %}
+                    {% if success %}
+                    <p style="color: rgb(39, 157, 221);">¡Archivo guardado exitosamente!</p>
+                    {% endif %}
+
+                </div>
+
+                <!-- Boton para la limpieza -->
+
+                <div class="model-steps" id="limpieza-step">
+
+                    <!-- Formulario para la limpieza-->
+                    <form action="/limpieza" method="get" id="clean-form" onsubmit="return realizarAccion()">
+                        <br>
+                        <input type="submit" value="Limpiar datos" class="button-core">
+                    </form>
+                    {% if limpieza_success %}
+                    <p style="color: rgb(39, 157, 221);">¡Datos limpiados exitosamente!</p>
+                    {% endif %}
+                    <!--
+                    <form action="/download" method="get">
+                        <br>
+                        <input type="submit" value="Descargar datos limpios" class="button-core">
+                    </form>
+                    -->
+                </div>
+
+                <!-- Boton de entrenamiento -->
+
+                <div class="model-steps" id="entrenamiento-step">
+                    
+                    <!-- Formulario para el entrenamiento-->
+
+                    <form action="/entrenamiento" method="post" onsubmit="return realizarAccion()">
+                        <label for="num1">Proporción de entrenamiento:</label>
+                        <input type="number" step="any" id="num1" name="num1" step="0.01" required pattern="^0\.[1-9][0-9]?$|^0\.9$">
+                        <br>
+                        <input type="submit" value="Entrenamiento" class="button-core", required >
+                    </form>
+                    {% if resultado is not none %}
+                    <p style="color: rgb(39, 157, 221);">Resultado: {{ resultado }}</p>
+                    <p style="color: rgb(39, 157, 221);">Ya puede descargar el reporte</p>
+                    {% endif %}            
+                    {% if error is not none %}
+                        <p style="color:red">Error: {{ error2 }}</p>
+                    {% endif %}
+                    <form action="/downloadd" method="get">
+                        <br>
+                        <input type="submit" value="Descargar reporte" class="button-core">
+                    </form>
+                </div>
+
+                <!-- Boton para la predicción -->
+
+                <div class="model-steps" id="prediccion-step">
+                    <form action="/prediccion" method="post" onsubmit="return realizarAccion()">
+                        <label for="valor1">Valor yr:</label>
+                        <input type="number" id="valor1" name="valor1" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor workinday:</label>
+                        <input type="number" id="valor2" name="valor2" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor temp:</label>
+                        <input type="number" id="valor3" step="any" name="valor3" required>
+                        <br>
+                        <label for="valor1">Valor atemp:</label>
+                        <input type="number" id="valor4" step="any" name="valor4" required>
+                        <br>
+                        <label for="valor1">Valor hum:</label>
+                        <input type="number" id="valor5" step="any" name="valor5" required>
+                        <br>
+                        <label for="valor1">Valor windspeed:</label>
+                        <input type="number" id="valor6" step="any" name="valor6" required>
+                        <br>
+                        <label for="valor1">Valor season 2:</label>
+                        <input type="number" id="valor7" name="valor7" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor season 3:</label>
+                        <input type="number" id="valor8" name="valor8" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor season 4:</label>
+                        <input type="number" id="valor9" name="valor9" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor month 3:</label>
+                        <input type="number" id="valor10" name="valor10" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor month 9:</label>
+                        <input type="number" id="valor11" name="valor11" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor month 10:</label>
+                        <input type="number" id="valor12" name="valor12" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor weekday 6:</label>
+                        <input type="number" id="valor13" name="valor13" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor weathershit 2:</label>
+                        <input type="number" id="valor14" name="valor14" min="0" max="1" required>
+                        <br>
+                        <label for="valor1">Valor weathershit 3:</label>
+                        <input type="number" id="valor15" name="valor15" min="0" max="1" required>
+                        <br>
+                        <button type="submit" class="button-core">Predicción</button>
+                    </form>
+                    {% if resultado is not none %}
+                    <p style="color: rgb(39, 157, 221);">Resultado: {{ resultado2 }}</p>
+                    {% endif %}            
+                    {% if error is not none %}
+                        <p style="color:red">Error: {{ error3 }}</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section id="about">
+                <h1 class="principal-title">How did we do it?</h1>
+            </section>
+            
+        </div>
+
+        <script>
+            // Función para realizar la acción y recordar la posición de desplazamiento
+            function realizarAccion() {
+                // Guarda la posición de desplazamiento actual en localStorage
+                localStorage.setItem('scrollPosition', window.scrollY);
+    
+                // Simula la acción de enviar el formulario
+                // Puedes realizar aquí la lógica de la acción si es necesario
+                // En este ejemplo, simplemente se muestra un mensaje en la consola
+                console.log('Acción realizada');
+                
+                return true;  // Permite el envío real del formulario
+            }
+    
+            // Restaura la posición de desplazamiento al cargar la página
+            window.onload = function() {
+                const scrollPosition = localStorage.getItem('scrollPosition');
+                if (scrollPosition !== null) {
+                    window.scrollTo(0, parseInt(scrollPosition, 10));
+                    localStorage.removeItem('scrollPosition');  // Limpiar después de restaurar
+                }
+            };
+        </script>
+    
+
+
+        <!-- Footer de la página-->
+        <footer class="footer">
+            <div class="containerr" id="contact">
+                <div class="footer-row">
+                    <div class="footer-links">
+                        <h4>Team</h4>
+                        <ul>
+                            <li><a href="">Francisco Chan Pech</a></li>
+                            <li><a href="">Carlos Helguera Mosqueda</a></li>
+                            <li><a href="">Valeria Paredes Dzib</a></li>
+                            <li><a href="">Pedro Avila Colli</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links">
+                        <h4>Contacto</h4>
+                        <ul>
+                            <li><a href="">Nosotros</a></li>
+                            <li><a href="">Nosotros</a></li>
+                            <li><a href="">Nosotros</a></li>
+                            <li><a href="">Nosotros</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links">
+                        <h4>Siguenos</h4>
+                        <div class="social-link">
+                            <a href=""><i class="fab fa-facebook"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href=""><i class="fab fa-linkedin"></i></a>
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
