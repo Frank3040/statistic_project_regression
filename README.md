@@ -29,9 +29,8 @@ To enhance accessibility and deployment, we will incorporate Docker. Docker allo
 
 ## How to Run the Project
 1. Clone this repository.
-2. Build the Docker container: `docker build -t regression_project .`
-3. Run the container: `docker run -p 5000:5000 regression_project`
-4. Access the API at `http://localhost:5000`
-
-## License
-This project is licensed under the MIT License.
+2. Build and run the Docker container using Docker Compose:
+   ```sh
+   docker-compose up --build
+   ```
+3. Access the API at `http://localhost:5000`
